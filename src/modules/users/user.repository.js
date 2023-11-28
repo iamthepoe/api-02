@@ -26,4 +26,13 @@ export default class UserRepository{
 	findByEmail(email){
 		return this.model.findOne({email});
 	}
+	
+	/**
+     * 
+     * @param {string} id
+     * @returns {Promise<UserEntity>}
+     */
+	findById(id){
+		return this.model.findOne({_id: id});
+	}
 }

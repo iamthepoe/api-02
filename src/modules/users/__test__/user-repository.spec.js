@@ -84,4 +84,13 @@ describe('UserRepository', ()=>{
 		assert.ok(userWithCurrentEmail.email);
 		assert.strictEqual(userWithCurrentEmail.email, createdUser.email);
 	});
+
+	it('should find an user by id', async ()=>{
+		const userWithCurrentId = await repository.findById({
+			id: createdUser.id
+		});
+
+		assert.ok(userWithCurrentId.id);
+		assert.strictEqual(userWithCurrentId.id, createdUser.id);
+	});
 });

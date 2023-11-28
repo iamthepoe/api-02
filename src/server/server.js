@@ -3,6 +3,7 @@ import { configDotenv } from 'dotenv';
 import process from 'process';
 import mongoose from 'mongoose';
 import { CreateUserController } from '../factories/user.factory.js';
+import { CreateAuthController } from '../factories/auth.factory.js';
 
 configDotenv();
 
@@ -21,7 +22,8 @@ export default class SetupServer{
 	constructor(
 		app = express(), 
 		port = process.env.SERVER_PORT || 3000, 
-		userController = CreateUserController()
+		userController = CreateUserController(),
+		authController = CreateAuthController(),
 	){
 		/**@private*/
 		this.app = app;
@@ -29,6 +31,8 @@ export default class SetupServer{
 		this.port = port;
 		/**@private */
 		this.userController = userController;
+		/**@private */
+		this.authController = authController;
 	}
 
 	init(){
@@ -61,6 +65,10 @@ export default class SetupServer{
 	setupRoutes(){
 		this.app.post('/user', (req,res)=>{
 			return this.userController.create(req,res);
+		});
+
+		this.app.post('/sign-in', (req,res)=>{
+			return this.authController.signIn(req,res);
 		});
 	}
 

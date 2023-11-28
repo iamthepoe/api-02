@@ -1,5 +1,6 @@
 import validator from 'validator';
 import BadRequestException from '../../server/exceptions/bad-request.exception.js';
+import NotFoundException from '../../server/exceptions/not-found.exception.js';
 
 const {isEmail, isEmpty} = validator;
 
@@ -46,8 +47,9 @@ export default class UserService {
 		}
 	};
 
-	constructor(repository){
+	constructor(repository, hashService){
 		this.repository = repository;
+		this.hashService = hashService;
 	}
 
 	/**
@@ -65,7 +67,10 @@ export default class UserService {
 			throw new BadRequestException('Email is already in use');
 
 
-		const createdUser = await this.repository.create(user);
+		const createdUser = await this.repository.create({
+			...user,
+			password: await this.hashService.hash(user.password)
+		});
 
 		const {_id, createdAt, updatedAt, lastLogin} = createdUser;
 
@@ -76,6 +81,18 @@ export default class UserService {
 			lastLogin,
 			token: null
 		};
+	}
+
+	async findById(id){
+		const user = await this.repository.findById(id);
+		if(!user) throw new NotFoundException('User not found.');
+		return user;
+	}
+
+	async findByEmail(email){
+		const user = await this.repository.findByEmail(email);
+		if(!user) throw new NotFoundException('User not found.');
+		return user;
 	}
 
 	/**
