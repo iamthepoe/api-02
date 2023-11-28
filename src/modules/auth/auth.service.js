@@ -19,6 +19,15 @@ export default class AuthService{
 	}
 
 	/**
+	 * 
+	 * @param { UserEntity } user
+	 */
+	async createToken(user){
+		const token = await this.jwt.sign({ id: user.id }, this.secret, { expiresIn: '0.3h' });
+		return token;
+	}
+
+	/**
      * @private
      * @param {string} authorizationHeader
      * @returns {string}
