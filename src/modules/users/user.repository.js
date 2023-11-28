@@ -1,11 +1,11 @@
 export default class UserRepository{
-	/**
-     * @private
-     * @type {User}
-     */
-	model;
 
+	/**
+	 * 
+	 * @param {import('../../models/User.js').default} model 
+	 */
 	constructor(model){
+		/**@private */
 		this.model = model;
 	}
 
@@ -34,5 +34,14 @@ export default class UserRepository{
      */
 	findById(id){
 		return this.model.findOne({_id: id});
+	}
+
+	/**
+	 * 
+	 * @param {User} user
+	 * @returns 
+	 */
+	save(user){
+		return this.model.findOneAndUpdate({_id: user._id}, {$set: {...user}});
 	}
 }

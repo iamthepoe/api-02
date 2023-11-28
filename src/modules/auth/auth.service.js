@@ -53,6 +53,10 @@ export default class AuthService{
 
 		const token = await this.createToken(user);
 
+		user.lastLogin = Date.now();
+		
+		await this.userService.save(user);
+
 		const {_id, createdAt, updatedAt, lastLogin} = user;
 
 		return {

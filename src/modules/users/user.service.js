@@ -95,6 +95,10 @@ export default class UserService {
 		return user;
 	}
 
+	async save(user){
+		return this.repository.save(user);
+	}
+
 	/**
      * 
      * @param {CreateUserDTO} user
