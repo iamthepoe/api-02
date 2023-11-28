@@ -1,11 +1,19 @@
 import AuthController from '../modules/auth/auth.controller.js';
 import AuthService from '../modules/auth/auth.service.js';
 import jwt from 'jsonwebtoken';
-import { CreateUserService } from './user.factory.js';
 import { CreateHashService } from './hash.factory.js';
+import UserService from '../modules/users/user.service.js';
+import { CreateUserRepository } from './user.factory.js';
 
 export const CreateAuthService = ()=>{
-	return new AuthService(jwt, CreateUserService(), CreateHashService());
+	const repository = CreateUserRepository();
+	const hashService = CreateHashService();
+
+	return new AuthService(
+		jwt, 
+		new UserService(repository, hashService), 
+		hashService,
+	);
 };
 
 export const CreateAuthController = ()=>{
