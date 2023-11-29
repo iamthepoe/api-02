@@ -1,6 +1,20 @@
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 import prettier from 'gulp-prettier';
+import { exec } from 'child_process';
+
+async function test() {
+  return new Promise((resolve, reject) => {
+    exec('npm run test:unit', (error, stdout, stderr) => {
+      console.error(stderr);
+      if (error) {
+        reject(error);
+      } else {
+        resolve();
+      }
+    });
+  });
+}
 
 async function build() {
   return gulp.src('src/**/*.js')
@@ -9,9 +23,4 @@ async function build() {
     .pipe(gulp.dest('dist'));
 }
 
-function watch() {
-  gulp.watch('src/**/*.js', gulp.series(build));
-}
-
-
-gulp.task('default', gulp.series(build, watch));
+gulp.task('default', gulp.series(test, build));
