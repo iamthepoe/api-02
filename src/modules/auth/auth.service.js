@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import UserEntity from '../users/entities/user.entity.js';
 import { configDotenv } from 'dotenv';
 import process from 'process';
 import InternalErrorException from '../../server/exceptions/internal-error.exception.js';
@@ -51,13 +53,13 @@ export default class AuthService{
 		if(!passwordIsCorrect) 
 			throw new UnauthorizedException('Email or/and password are incorrect.');
 
-		const token = await this.createToken(user);
-
 		user.lastLogin = Date.now();
-		
+
 		await this.userService.save(user);
 
 		const {_id, createdAt, updatedAt, lastLogin} = user;
+
+		const token = await this.createToken(user);
 
 		return {
 			id: _id,
@@ -71,13 +73,18 @@ export default class AuthService{
 	/**
 	 * @public
 	 * @param { UserEntity } user
+	 * @returns {Promise<string>}
 	 */
 	async createToken(user){
 		try{
-			const token = await this.jwt.sign({ id: user.id }, this.secret, { expiresIn: '0.3h' });
+			const token = await this.jwt.sign(
+				{ id: user.id }, 
+				this.secret, 
+				{ expiresIn: '1800000' }
+			);
+
 			return token;
 		}catch(e){
-			console.log(e);
 			throw new InternalErrorException();
 		}
 	}
@@ -98,13 +105,14 @@ export default class AuthService{
 	/**
      * @public
      * @param {string} token 
+	 * @returns {Promise<{id: string}>}
      */
 	async decodeToken(token){
 		try{
 			const decodedToken = await this.jwt.verify(token, this.secret);
 			return decodedToken;
 		}catch{
-			throw new UnauthorizedException('Invalid Token.');
+			throw new UnauthorizedException('Unauthorizated.');
 		}
 	}
 }

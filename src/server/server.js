@@ -39,6 +39,7 @@ export default class SetupServer{
 		try{
 			this.setupDatabase();
 			this.setupExpress();
+			this.setupMiddlewares();
 			this.setupRoutes();
 			this.server = this.app.listen(this.port);
 			return true;
@@ -59,11 +60,21 @@ export default class SetupServer{
 		this.app.use(express.json());
 	}
 
+	setupMiddlewares(){
+		this.app.use('/user', (req,res,next)=>{
+			this.authController.authorize(req,res,next);
+		});
+	}
+
 	/**
 	 * @private
 	 */
 	setupRoutes(){
-		this.app.post('/user', (req,res)=>{
+		this.app.get('/user', (req,res)=>{
+			return this.userController.findByToken(req,res);
+		});
+
+		this.app.post('/sign-up', (req,res)=>{
 			return this.userController.create(req,res);
 		});
 

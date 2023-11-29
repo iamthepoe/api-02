@@ -1,6 +1,5 @@
 export default class AuthController{
 	/**
-     * 
      * @param {import('./auth.service.js').default} authService 
      */
 	constructor(authService){
@@ -13,14 +12,13 @@ export default class AuthController{
      * @param {import('express').Request} req 
      * @param {import('express').Response} res 
 	 **/
-	async signIn(req,res){
+	async signIn(req, res){
 		try{
-			const {email, password} = req.body;
+			const { email, password } = req.body;
 
 			const response = await this.authService.signIn(email, password);
 			return res.status(200).json(response);
 		}catch(e){
-			console.log(e);
 			this.handleError(e, res);
 		}
 	}
@@ -33,7 +31,7 @@ export default class AuthController{
      */
 	async authorize(req, res, next){
 		try{
-			const authHeader = req.header['authorization'];
+			const authHeader = req.headers['authorization'];
 			const token = this.authService.getTokenFromHeader(authHeader);
 
 			const payload = await this.authService.decodeToken(token);
@@ -47,8 +45,7 @@ export default class AuthController{
 	/**
      * 
      * @param {Error} exception 
-     * @param {Response} res
-     * @returns {Response}
+     * @param {import('express').Response} res 
      * @private
      */
 	handleError(exception, res){

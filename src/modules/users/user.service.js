@@ -1,3 +1,5 @@
+// eslint-disable-next-line no-unused-vars
+import UserEntity from './entities/user.entity.js';
 import validator from 'validator';
 import BadRequestException from '../../server/exceptions/bad-request.exception.js';
 import NotFoundException from '../../server/exceptions/not-found.exception.js';
@@ -66,7 +68,7 @@ export default class UserService {
 	/**
 	 * 
 	 * @param {string} id 
-	 * @returns {import('./entities/user.entity.js').default}
+	 * @returns {Promise<UserEntity>}
 	 */
 	async findById(id){
 		const user = await this.repository.findById(id);
@@ -77,7 +79,7 @@ export default class UserService {
 	/**
 	 * 
 	 * @param {string} email 
-	 * @returns {import('./entities/user.entity.js').default}
+	 * @returns {Promise<UserEntity>}
 	 */
 	async findByEmail(email){
 		const user = await this.repository.findByEmail(email);
@@ -87,7 +89,7 @@ export default class UserService {
 
 	/**
 	 * 
-	 * @param {import('./entities/user.entity.js').default} user 
+	 * @param {Promise<UserEntity} user 
 	 * @returns 
 	 */
 	async save(user){
