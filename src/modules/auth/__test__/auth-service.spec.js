@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { describe, it, beforeEach, mock } from 'node:test';
 import AuthService from '../auth.service.js';
 import assert from 'assert';
