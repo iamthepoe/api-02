@@ -3,8 +3,9 @@ import UserEntity from './entities/user.entity.js';
 import validator from 'validator';
 import BadRequestException from '../../server/exceptions/bad-request.exception.js';
 import NotFoundException from '../../server/exceptions/not-found.exception.js';
+import InternalErrorException from '../../server/exceptions/internal-error.exception.js';
 
-const {isEmail, isEmpty} = validator;
+const {isEmail} = validator;
 
 export default class UserService {
 	/** @private */
@@ -93,7 +94,11 @@ export default class UserService {
 	 * @returns 
 	 */
 	async save(user){
-		return this.repository.save(user);
+		try{
+			await this.repository.save(user);
+		}catch{
+			throw new InternalErrorException();
+		}
 	}
 
 	/**
@@ -106,6 +111,9 @@ export default class UserService {
 		Object.keys(user).forEach(key=>{
 			const validate = this.validations[key];
 			const property = user[key];
+			if(typeof property === 'string' && !property.trim())
+				return `"${key}" cannot be empty.`;
+
 			const message = validate(property);
 			errors+= message ? ` ${message}\n` : '';
 		});
@@ -119,7 +127,8 @@ export default class UserService {
 	 * @returns {string}
 	 */
 	validateName(name){
-		this.isEmpty('name', name);
+		if(!(typeof name === 'string'))
+			return '"name" should be a string';
 	}
 
 	/**
@@ -128,7 +137,6 @@ export default class UserService {
 	 * @returns {string}
 	 */
 	validateEmail(email){
-		this.isEmpty('email', email);
 		if(!isEmail(email))
 			return '"email" needs to be valid.';
 	}
@@ -162,16 +170,5 @@ export default class UserService {
 			if(phone['number'] != undefined && isNaN(phone['number']))
 				return '"number" needs to be a number';
 		});
-	}
-
-	/**
-	 * 
-	 * @param {string} key 
-	 * @param {any} value 
-	 * @returns {string}
-	 */
-	isEmpty(key, value){
-		if(isEmpty(value))
-			return `"${key}" cannot be empty.`;
 	}
 }
