@@ -44,7 +44,6 @@ describe('AuthService', ()=>{
 	});
 
 	it('should sign in with correct email and password', async () => {
-		// Mock the user service to return a user with a hashed password
 		mock.method(service['userService'], 'findByEmail', async () => {
 			return {
 				_id: randomUUID(),
@@ -93,7 +92,6 @@ describe('AuthService', ()=>{
 			};
 		});
 	
-		// Mock hashService.compare to return false (password incorrect)
 		mock.method(service.hashService, 'compare', async () => false);
 	
 		const email = 'test@example.com';
