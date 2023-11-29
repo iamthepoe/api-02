@@ -23,6 +23,16 @@ const jwtMock = {
 	}
 };
 
+const userServiceMock = {
+	findByEmail: ()=>{},
+	save: ()=>{}
+};
+
+const hashServiceMock = {
+	compare: ()=>{},
+	hash: ()=>{},
+};
+
 describe('AuthService', ()=>{
 	/**
      * @type {AuthService}
@@ -30,7 +40,68 @@ describe('AuthService', ()=>{
 	let service;
 
 	beforeEach(()=>{
-		service = new AuthService(jwtMock, 'secret');    
+		service = new AuthService(jwtMock, userServiceMock, hashServiceMock, 'secret');    
+	});
+
+	it('should sign in with correct email and password', async () => {
+		// Mock the user service to return a user with a hashed password
+		mock.method(service['userService'], 'findByEmail', async () => {
+			return {
+				_id: randomUUID(),
+				email: 'test@example.com',
+				password: 'password',
+				createdAt: Date.now(),
+				updatedAt: Date.now(),
+				lastLogin: Date.now(),
+			};
+		});
+	
+		mock.method(service.hashService, 'compare', async () => true);
+	
+		mock.method(service.userService, 'save', async () => {});
+	
+		const email = 'test@example.com';
+		const password = 'password123';
+	
+		const result = await service.signIn(email, password);
+	
+		assert.ok(result);
+		assert.strictEqual(typeof result.id, 'string');
+		assert.strictEqual(typeof result.createdAt, 'number');
+		assert.strictEqual(typeof result.updatedAt, 'number');
+		assert.strictEqual(typeof result.lastLogin, 'number');
+		assert.ok(result.token);
+	});
+	
+	it('should throw UnauthorizedException if email is incorrect', async () => {
+		mock.method(service.userService, 'findByEmail', async () => null);
+	
+		const email = 'nonexistent@example.com';
+		const password = 'password123';
+	
+		await assert.rejects(async () => {
+			await service.signIn(email, password);
+		}, UnauthorizedException);
+	});
+	
+	it('should throw UnauthorizedException if password is incorrect', async () => {
+		mock.method(service.userService, 'findByEmail', async () => {
+			return {
+				_id: randomUUID(),
+				email: 'test@example.com',
+				password: await service.hashService.hash('correctpassword'),
+			};
+		});
+	
+		// Mock hashService.compare to return false (password incorrect)
+		mock.method(service.hashService, 'compare', async () => false);
+	
+		const email = 'test@example.com';
+		const password = 'incorrectpassword';
+	
+		await assert.rejects(async () => {
+			await service.signIn(email, password);
+		}, UnauthorizedException);
 	});
 
 	it('should be defined', ()=>{
@@ -104,7 +175,7 @@ describe('AuthService', ()=>{
 			assert.fail(token);
 		}catch(e){
 			assert.ok(e instanceof UnauthorizedException);
-			assert.strictEqual(e.code, 403);
+			assert.strictEqual(e.code, 401);
 		}
 	});
 });
