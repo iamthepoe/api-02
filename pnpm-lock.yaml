@@ -5,9 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@prisma/client':
-    specifier: ^5.6.0
-    version: 5.6.0(prisma@5.6.0)
   bcrypt:
     specifier: ^5.1.1
     version: 5.1.1
@@ -37,6 +34,9 @@ devDependencies:
   '@babel/preset-env':
     specifier: ^7.23.3
     version: 7.23.3(@babel/core@7.23.3)
+  '@babel/preset-modules':
+    specifier: ^0.1.6
+    version: 0.1.6(@babel/core@7.23.3)
   '@types/express':
     specifier: ^4.17.21
     version: 4.17.21
@@ -52,9 +52,6 @@ devDependencies:
   prettier:
     specifier: ^3.1.0
     version: 3.1.0
-  prisma:
-    specifier: ^5.6.0
-    version: 5.6.0
 
 packages:
 
@@ -404,6 +401,18 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.23.3
+    dev: true
+
+  /@babel/plugin-proposal-unicode-property-regex@7.18.6(@babel/core@7.23.3):
+    resolution: {integrity: sha512-2BShG/d5yoZyXZfVePH91urL5wTG6ASZU9M4o03lKK8u8UW1y08OMttBSOADTcJrnPMpvDXRG3G8fyLh4ovs8w==}
+    engines: {node: '>=4'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-unicode-property-regex instead.
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.23.3
+      '@babel/helper-create-regexp-features-plugin': 7.22.15(@babel/core@7.23.3)
+      '@babel/helper-plugin-utils': 7.22.5
     dev: true
 
   /@babel/plugin-syntax-async-generators@7.8.4(@babel/core@7.23.3):
@@ -1198,6 +1207,19 @@ packages:
       - supports-color
     dev: true
 
+  /@babel/preset-modules@0.1.6(@babel/core@7.23.3):
+    resolution: {integrity: sha512-ID2yj6K/4lKfhuU3+EX4UvNbIt7eACFbHmNUjzA+ep+B5971CknnA/9DEWKbRokfbbtblxxxXFJJrH47UEAMVg==}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0 || ^8.0.0-0 <8.0.0
+    dependencies:
+      '@babel/core': 7.23.3
+      '@babel/helper-plugin-utils': 7.22.5
+      '@babel/plugin-proposal-unicode-property-regex': 7.18.6(@babel/core@7.23.3)
+      '@babel/plugin-transform-dotall-regex': 7.23.3(@babel/core@7.23.3)
+      '@babel/types': 7.23.4
+      esutils: 2.0.3
+    dev: true
+
   /@babel/preset-modules@0.1.6-no-external-plugins(@babel/core@7.23.3):
     resolution: {integrity: sha512-HrcgcIESLm9aIR842yhJ5RWan/gebQUJ6E/E5+rf0y9o6oj7w0Br+sWuL6kEQ/o/AdfvR1Je9jG18/gnpwjEyA==}
     peerDependencies:
@@ -1393,28 +1415,6 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
     dev: true
-
-  /@prisma/client@5.6.0(prisma@5.6.0):
-    resolution: {integrity: sha512-mUDefQFa1wWqk4+JhKPYq8BdVoFk9NFMBXUI8jAkBfQTtgx8WPx02U2HB/XbAz3GSUJpeJOKJQtNvaAIDs6sug==}
-    engines: {node: '>=16.13'}
-    requiresBuild: true
-    peerDependencies:
-      prisma: '*'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
-    dependencies:
-      '@prisma/engines-version': 5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee
-      prisma: 5.6.0
-    dev: false
-
-  /@prisma/engines-version@5.6.0-32.e95e739751f42d8ca026f6b910f5a2dc5adeaeee:
-    resolution: {integrity: sha512-UoFgbV1awGL/3wXuUK3GDaX2SolqczeeJ5b4FVec9tzeGbSWJboPSbT0psSrmgYAKiKnkOPFSLlH6+b+IyOwAw==}
-    dev: false
-
-  /@prisma/engines@5.6.0:
-    resolution: {integrity: sha512-Mt2q+GNJpU2vFn6kif24oRSBQv1KOkYaterQsi0k2/lA+dLvhRX6Lm26gon6PYHwUM8/h8KRgXIUMU0PCLB6bw==}
-    requiresBuild: true
 
   /@types/body-parser@1.19.5:
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
@@ -2897,14 +2897,6 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
     dev: true
-
-  /prisma@5.6.0:
-    resolution: {integrity: sha512-EEaccku4ZGshdr2cthYHhf7iyvCcXqwJDvnoQRAJg5ge2Tzpv0e2BaMCp+CbbDUwoVTzwgOap9Zp+d4jFa2O9A==}
-    engines: {node: '>=16.13'}
-    hasBin: true
-    requiresBuild: true
-    dependencies:
-      '@prisma/engines': 5.6.0
 
   /proxy-addr@2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
