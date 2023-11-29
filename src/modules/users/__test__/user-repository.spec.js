@@ -15,7 +15,8 @@ const userModelMock = {
 			});
 		});
 	},
-	findOne: ()=>{}
+	findOne: ()=>{},
+	findOneAndUpdate: ()=>{}
 };
 
 describe('UserRepository', ()=>{
@@ -92,5 +93,20 @@ describe('UserRepository', ()=>{
 
 		assert.ok(userWithCurrentId.id);
 		assert.strictEqual(userWithCurrentId.id, createdUser.id);
+	});
+
+	it('should save an user', async ()=>{
+		// eslint-disable-next-line no-unused-vars
+		mock.method(repository['model'], 'findOneAndUpdate', (query, value)=>{
+			return new Promise((resolve)=>{
+				resolve({
+					...createdUser
+				});
+			});
+		});
+		createdUser.lastLogin = Date.now();
+		const savedUser = await repository.save(createdUser);
+		assert.ok(savedUser);
+		assert.strictEqual(savedUser.lastLogin, createdUser.lastLogin);
 	});
 });

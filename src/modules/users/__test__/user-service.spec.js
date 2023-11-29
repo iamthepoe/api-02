@@ -3,9 +3,12 @@ import UserService from '../user.service.js';
 import assert from 'assert';
 import { randomUUID } from 'crypto';
 import BadRequestException from '../../../server/exceptions/bad-request.exception.js';
+import NotFoundException from '../../../server/exceptions/not-found.exception.js';
+import InternalErrorException from '../../../server/exceptions/internal-error.exception.js';
 
 const userRepositoryMock = {
 	findByEmail: ()=>{},
+	findById: ()=>{},
 	create: (user)=>{
 		return new Promise((resolve)=>{
 			resolve({
@@ -16,6 +19,20 @@ const userRepositoryMock = {
 				lastLogin: Date.now()
 			});
 		});
+	},
+	save: ()=>{},
+};
+
+const hashServiceMock = {
+	hash: (value)=>{
+		return new Promise((resolve)=> resolve(value));
+	}
+};
+
+const authServiceMock = {
+	// eslint-disable-next-line no-unused-vars
+	createToken: (payload)=>{
+		return new Promise((resolve)=> resolve('token'));
 	}
 };
 
@@ -24,7 +41,7 @@ describe('UserService', ()=>{
 	let service;
 
 	beforeEach(()=>{
-		service = new UserService(userRepositoryMock);
+		service = new UserService(userRepositoryMock, hashServiceMock, authServiceMock);
 	});
 
 	it('should be defined', ()=>{
@@ -128,6 +145,52 @@ describe('UserService', ()=>{
 				assert.strictEqual(exception.code, 400);
 			}
     
+		});
+	});
+
+	describe('findBy', ()=>{
+		it('should return a 404 if email does not exist.', async ()=>{
+			mock.method(service['repository'], 'findByEmail', ()=>{
+				return null;
+			});
+
+			try{
+				const user = await service.findByEmail('some@email.com');
+				assert.fail(user);
+			}catch(e){
+				assert.ok(e instanceof NotFoundException);
+				assert.strictEqual(e.code, 404);
+			}
+		});
+
+		it('should return a 404 if id does not exist.', async ()=>{
+			mock.method(service['repository'], 'findById', ()=>{
+				return null;
+			});
+
+			try{
+				const user = await service.findById('someid');
+				assert.fail(user);
+			}catch(e){
+				assert.ok(e instanceof NotFoundException);
+				assert.strictEqual(e.code, 404);
+			}
+		});
+	});
+
+	describe('save', ()=>{
+		it('should throw a internal error if save fails', async ()=>{
+			mock.method(service['repository'], 'save', ()=>{
+				throw new Error();
+			});
+
+			try{
+				const savedUser = await service.save('something');
+				assert.fail(savedUser);
+			}catch(e){
+				assert.ok(e instanceof InternalErrorException);
+				assert.strictEqual(e.code, 500);
+			}
 		});
 	});
 });
