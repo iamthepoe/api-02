@@ -15,11 +15,11 @@ export default class AuthController {
   async signIn(req, res) {
     try {
       const { email, password } = req.body;
-
+      
       const response = await this.authService.signIn(email, password);
       return res.status(200).json(response);
     } catch (e) {
-      this.handleError(e, res);
+      return this.handleError(e, res);
     }
   }
 
@@ -38,7 +38,7 @@ export default class AuthController {
       req.payload = payload;
       next();
     } catch (e) {
-      this.handleError(e, res);
+      return this.handleError(e, res);
     }
   }
 
