@@ -23,7 +23,7 @@ export default class CreateUserDTO {
   
 	/**
      * An array of phone entities associated with the user.
-     * @type {Array<PhoneEntity>}
+     * @type {Array<import('../entities/phone.entity.js').default>}
      */
 	phones;
 }

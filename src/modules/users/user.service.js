@@ -5,56 +5,36 @@ import NotFoundException from '../../server/exceptions/not-found.exception.js';
 const {isEmail, isEmpty} = validator;
 
 export default class UserService {
-	/**
-     * @type {UserRepository}
-     * @private
-     */
-	repository;
-
 	/** @private */
 	validations = {
-		name: (name)=>{
-			this.validations.isEmpty('name', name);
-			if(!(typeof name === 'string'))
-				return '"name" needs to be a string.';
-		},
-		email: (email)=>{
-			this.validations.isEmpty('email', email);
-			if(!isEmail(email))
-				return '"email" needs to be valid.';
-		},
-		password: (password)=>{
-			this.validations.isEmpty('password', password);
-			if(!(typeof password === 'string'))
-				return '"password" needs to be a string';
-
-			if(password.length < 8)
-				return '"password" length needs to be greater than 7';
-		},
-		phones: (phones)=>{
-			if(!(phones['ddd'] || phones['number']))
-				return '"phone" needs to have a ddd and number';
-            
-			if(phones['ddd'] != undefined && isNaN(phones['ddd']))
-				return '"ddd" needs to be a number';
-
-			if(phones['number'] != undefined && isNaN(phones['number']))
-				return '"number" needs to be a number';
-		},
-		isEmpty: (key, value)=>{
-			if(isEmpty(value))
-				return `"${key}" cannot be empty.`;
-		}
+		name: this.validateName,
+		email: this.validateEmail,
+		password: this.validatePassword,
+		phones: this.validatePhones,
 	};
 
-	constructor(repository, hashService){
+	/**
+	 * 
+	 * @param {import('../../models/User.js').default} repository 
+	 * @param {import('../hash/hash.service.js').default} hashService 
+	 * @param {import('../auth/auth.service.js').default} authService 
+	 */
+	constructor(repository, hashService, authService){
 		this.repository = repository;
 		this.hashService = hashService;
+		this.authService = authService;
 	}
 
 	/**
      * 
-     * @param {CreateUserDTO} user
+     * @param {import('./dto/create-user.dto.js').default} user
+	 * @returns {Promise<{
+	 * 	id: string;
+	 * 	createdAt: Date;
+	 * 	updatedAt: Date;
+	 * 	lastLogin: Date;
+	 * 	token: string;
+	 * }>}
      */
 	async create(user){
 		const errors = this.validateUser(user);
@@ -72,37 +52,51 @@ export default class UserService {
 			password: await this.hashService.hash(user.password)
 		});
 
-		const {_id, createdAt, updatedAt, lastLogin} = createdUser;
+		const { _id, createdAt, updatedAt, lastLogin } = createdUser;
 
 		return {
 			id: _id,
 			createdAt,
 			updatedAt,
 			lastLogin,
-			token: null
+			token: await this.authService.createToken(createdUser),
 		};
 	}
 
+	/**
+	 * 
+	 * @param {string} id 
+	 * @returns {import('./entities/user.entity.js').default}
+	 */
 	async findById(id){
 		const user = await this.repository.findById(id);
 		if(!user) throw new NotFoundException('User not found.');
 		return user;
 	}
 
+	/**
+	 * 
+	 * @param {string} email 
+	 * @returns {import('./entities/user.entity.js').default}
+	 */
 	async findByEmail(email){
 		const user = await this.repository.findByEmail(email);
 		if(!user) throw new NotFoundException('User not found.');
 		return user;
 	}
 
+	/**
+	 * 
+	 * @param {import('./entities/user.entity.js').default} user 
+	 * @returns 
+	 */
 	async save(user){
 		return this.repository.save(user);
 	}
 
 	/**
-     * 
-     * @param {CreateUserDTO} user
-	 * @private
+     * @private
+     * @param {import('./dto/create-user.dto.js').default} user
 	 * @returns {string}
      */
 	validateUser(user){
@@ -110,17 +104,72 @@ export default class UserService {
 		Object.keys(user).forEach(key=>{
 			const validate = this.validations[key];
 			const property = user[key];
-			if(key === 'phones'){
-				user[key].forEach(phone=>{
-					const message = this.validations.phones(phone);
-					errors+= message ? ` ${message}\n` : '';
-				});
-			}else{
-				const message = validate(property);
-				errors+= message ? ` ${message}\n` : '';
-			}
+			const message = validate(property);
+			errors+= message ? ` ${message}\n` : '';
 		});
 
 		return errors;
+	}
+
+	/**
+	 * @private
+	 * @param {string} name
+	 * @returns {string}
+	 */
+	validateName(name){
+		this.isEmpty('name', name);
+	}
+
+	/**
+	 * @private
+	 * @param {string} email
+	 * @returns {string}
+	 */
+	validateEmail(email){
+		this.isEmpty('email', email);
+		if(!isEmail(email))
+			return '"email" needs to be valid.';
+	}
+
+	/**
+	 * @private
+	 * @param {string} password
+	 * @returns {string}
+	 */
+	validatePassword(password){
+		if(!(typeof password === 'string'))
+			return '"password" needs to be a string';
+
+		if(password.length < 8)
+			return '"password" length needs to be greater than 7';
+	}
+
+	/**
+	 * @private
+	 * @param {{ddd: string, number: string}[]} phones
+	 * @returns {string}
+	 */
+	validatePhones(phones){
+		phones.forEach(phone=>{
+			if(!(phone['ddd'] || phone['number']))
+				return '"phone" needs to have a ddd and number';
+            
+			if(phone['ddd'] != undefined && isNaN(phone['ddd']))
+				return '"ddd" needs to be a number';
+
+			if(phone['number'] != undefined && isNaN(phone['number']))
+				return '"number" needs to be a number';
+		});
+	}
+
+	/**
+	 * 
+	 * @param {string} key 
+	 * @param {any} value 
+	 * @returns {string}
+	 */
+	isEmpty(key, value){
+		if(isEmpty(value))
+			return `"${key}" cannot be empty.`;
 	}
 }

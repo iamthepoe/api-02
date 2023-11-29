@@ -1,4 +1,7 @@
-export class UserEntity {
+export default class UserEntity {
+	/** @type {string} */
+	_id;
+     
 	/**
      * The name of the user.
      * @type {string}

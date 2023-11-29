@@ -16,7 +16,6 @@ export default class UserController{
      * 
      * @param {Request} req 
      * @param {Response} res 
-     * @returns 
      */
 	async create(req, res){
 		try{
@@ -30,6 +29,28 @@ export default class UserController{
 			});
 
 			return res.status(201).json(response);
+		}catch(e){
+			return this.handleError(e, res);
+		}
+	}
+
+	/**
+     * 
+     * @param {Request} req 
+     * @param {Response} res 
+     * @returns 
+     */
+	async findByToken(req, res){
+		try{
+			const { id } = req.payload;
+			const user = await this.service.findById(id);
+			const { name, email, phones, _id } = user;
+			return res.status(200).json({
+				id: _id,
+				name,
+				email,
+				phones,
+			});
 		}catch(e){
 			return this.handleError(e, res);
 		}

@@ -1,5 +1,10 @@
 export default class PhoneEntity {
 	/**
+      * @type {string}
+      */
+	_id;
+     
+	/**
      * The phone number.
      * @type {string}
      */

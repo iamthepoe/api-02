@@ -23,7 +23,7 @@ export default class UpdateUserDTO {
   
 	/**
      * An array of phone entities associated with the user.
-     * @type {Array<PhoneEntity> | undefined}
+     * @type {Array<import('../entities/phone.entity.js').default> | undefined}
      */
 	phones;
 }
