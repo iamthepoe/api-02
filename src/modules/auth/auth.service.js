@@ -95,7 +95,7 @@ export default class AuthService{
      * @returns {string}
      */
 	getTokenFromHeader(authorizationHeader){
-		const token = authorizationHeader.split(' ')[1];
+		const token = authorizationHeader?.split(' ')[1];
 		if(!token?.trim())
 			throw new UnauthorizedException('Missing Bearer Token.');
         

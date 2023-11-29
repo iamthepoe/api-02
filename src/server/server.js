@@ -60,6 +60,9 @@ export default class SetupServer{
 		this.app.use(express.json());
 	}
 
+	/**
+	 * @private
+	 */
 	setupMiddlewares(){
 		this.app.use('/user', (req,res,next)=>{
 			this.authController.authorize(req,res,next);
@@ -70,6 +73,10 @@ export default class SetupServer{
 	 * @private
 	 */
 	setupRoutes(){
+		this.app.get('*', (req,res)=>{
+			return res.status(404).json({message: 'Not Found'});
+		});
+
 		this.app.get('/user', (req,res)=>{
 			return this.userController.findByToken(req,res);
 		});
@@ -94,6 +101,7 @@ export default class SetupServer{
 		});
 	}
 
+	/**@private */
 	closeDatabase(){
 		return mongoose.disconnect();
 	}
