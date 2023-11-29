@@ -5,17 +5,17 @@ import { CreateHashService } from './hash.factory.js';
 import UserService from '../modules/users/user.service.js';
 import { CreateUserRepository } from './user.factory.js';
 
-export const CreateAuthService = ()=>{
-	const repository = CreateUserRepository();
-	const hashService = CreateHashService();
+export const CreateAuthService = () => {
+  const repository = CreateUserRepository();
+  const hashService = CreateHashService();
 
-	return new AuthService(
-		jwt, 
-		new UserService(repository, hashService), 
-		hashService,
-	);
+  return new AuthService(
+    jwt,
+    new UserService(repository, hashService),
+    hashService
+  );
 };
 
-export const CreateAuthController = ()=>{
-	return new AuthController(CreateAuthService());
+export const CreateAuthController = () => {
+  return new AuthController(CreateAuthService());
 };

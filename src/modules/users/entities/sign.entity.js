@@ -1,30 +1,30 @@
-export default class SignEntity{
-	/**
-     * @type {string}
-     */
-	id;
+export default class SignEntity {
+  /**
+   * @type {string}
+   */
+  id;
 
-	/**
-     * The creation timestamp of the user entity.
-     * @type {Date}
-     */
-	createdAt;
-  
-	/**
-     * The last update timestamp of the user entity.
-     * @type {Date}
-     */
-	updatedAt;
+  /**
+   * The creation timestamp of the user entity.
+   * @type {Date}
+   */
+  createdAt;
 
-	/**
-     * The last login timestamp for the user.
-     * @type {Date}
-     */
-	lastLogin;
+  /**
+   * The last update timestamp of the user entity.
+   * @type {Date}
+   */
+  updatedAt;
 
-	/**
-     * The user JWT Token
-     * @type {string}
-     */
-	token;
+  /**
+   * The last login timestamp for the user.
+   * @type {Date}
+   */
+  lastLogin;
+
+  /**
+   * The user JWT Token
+   * @type {string}
+   */
+  token;
 }
