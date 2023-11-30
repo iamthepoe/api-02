@@ -105,7 +105,7 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 
 ![deploy](https://raw.githubusercontent.com/iamthepoe/api-02/main/assets/deploy.png)
 
-#### URL API: [https://escribo-wgmh.onrender.com](https://escribo-wgmh.onrender.com) 
+#### URL API: [http://escribo.brazilsouth.cloudapp.azure.com](http://escribo.brazilsouth.cloudapp.azure.com)
 #### URL Front-End: [https://escribo-frontend.vercel.app](https://escribo-frontend.vercel.app)
 </div>
 
