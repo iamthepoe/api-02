@@ -156,15 +156,17 @@ export default class UserService {
    * @returns {string}
    */
   validatePhones(phones) {
-    phones.forEach((phone) => {
+    const message = phones.map((phone) => {
       if (!(phone['ddd'] || phone['number']))
         return '"phone" needs to have a ddd and number';
 
-      if (phone['ddd'] != undefined && isNaN(phone['ddd']))
+      if (isNaN(phone['ddd']))
         return '"ddd" needs to be a number';
 
-      if (phone['number'] != undefined && isNaN(phone['number']))
+      if (isNaN(phone['number']))
         return '"number" needs to be a number';
     });
+    
+    return message;
   }
 }
