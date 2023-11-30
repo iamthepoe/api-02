@@ -2,7 +2,7 @@
   "name": "auth-api",
   "version": "1.0.0",
   "description": "Desafio Técnico: API de Autenticação",
-  "main": "index.js",
+  "main": "dist/src/index.js",
   "type": "module",
   "scripts": {
     "dev": "node --watch src/index.js",
@@ -45,5 +45,9 @@
     "gulp-if": "^3.0.0",
     "gulp-prettier": "^6.0.0",
     "prettier": "^3.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamthepoe/api-02.git"
   }
 }
