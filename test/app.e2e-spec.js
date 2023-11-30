@@ -18,8 +18,8 @@ describe('App (e2e)', () => {
     name: `John ${randomUUID()}`,
     email: `${randomUUID()}@${randomUUID()}.com`,
     password: `@${randomUUID()}@`,
-    phones: [{ddd: '11', number: '997882213'}]
-  }
+    phones: [{ ddd: '11', number: '997882213' }],
+  };
 
   let token = '';
 
@@ -36,10 +36,10 @@ describe('App (e2e)', () => {
     assert.ok(server);
   });
 
-  describe('POST /sign-up', ()=>{
-    it('should create an user with success', async ()=>{
+  describe('POST /sign-up', () => {
+    it('should create an user with success', async () => {
       const response = await fetch(`${URL}/sign-up`, {
-        body: JSON.stringify({...createdUser}),
+        body: JSON.stringify({ ...createdUser }),
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,9 +61,9 @@ describe('App (e2e)', () => {
       token = data.token;
     });
 
-    it('should reject if email is already in use', async ()=>{
+    it('should reject if email is already in use', async () => {
       const response = await fetch(`${URL}/sign-up`, {
-        body: JSON.stringify({...createdUser}),
+        body: JSON.stringify({ ...createdUser }),
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -76,19 +76,17 @@ describe('App (e2e)', () => {
       assert.ok(data);
 
       assert.strictEqual(response.status, 400);
-      assert.strictEqual(data.message, 'Email is already in use')
+      assert.strictEqual(data.message, 'Email is already in use');
     });
   });
 
-  describe('POST /sign-in', ()=>{
-    it('should sign-in an user with success', async ()=>{
+  describe('POST /sign-in', () => {
+    it('should sign-in an user with success', async () => {
       const response = await fetch(`${URL}/sign-in`, {
-        body: JSON.stringify(
-          {
-            email: createdUser.email,
-            password: createdUser.password
-          }
-        ),
+        body: JSON.stringify({
+          email: createdUser.email,
+          password: createdUser.password,
+        }),
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -109,14 +107,12 @@ describe('App (e2e)', () => {
       token = data.token;
     });
 
-    it('should return 401 if password is incorrect', async ()=>{
+    it('should return 401 if password is incorrect', async () => {
       const response = await fetch(`${URL}/sign-in`, {
-        body: JSON.stringify(
-          {
-            email: createdUser.email,
-            password: "21302312412"
-          }
-        ),
+        body: JSON.stringify({
+          email: createdUser.email,
+          password: '21302312412',
+        }),
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -128,17 +124,15 @@ describe('App (e2e)', () => {
       assert.ok(response);
       assert.ok(data);
       assert.strictEqual(response.status, 401);
-      assert.strictEqual(data.message, 'Email or/and password are incorrect.')
+      assert.strictEqual(data.message, 'Email or/and password are incorrect.');
     });
 
-    it('should return 401 if email is incorrect', async ()=>{
+    it('should return 401 if email is incorrect', async () => {
       const response = await fetch(`${URL}/sign-in`, {
-        body: JSON.stringify(
-          {
-            email: "wrong@email.com",
-            password: createdUser.password
-          }
-        ),
+        body: JSON.stringify({
+          email: 'wrong@email.com',
+          password: createdUser.password,
+        }),
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -150,17 +144,15 @@ describe('App (e2e)', () => {
       assert.ok(response);
       assert.ok(data);
       assert.strictEqual(response.status, 401);
-      assert.strictEqual(data.message, 'Email or/and password are incorrect.')
+      assert.strictEqual(data.message, 'Email or/and password are incorrect.');
     });
 
-    it('should return 401 if email dont exist', async ()=>{
+    it('should return 401 if email dont exist', async () => {
       const response = await fetch(`${URL}/sign-in`, {
-        body: JSON.stringify(
-          {
-            email: "email@quenaoexiste.inexistente",
-            password: "21302312412"
-          }
-        ),
+        body: JSON.stringify({
+          email: 'email@quenaoexiste.inexistente',
+          password: '21302312412',
+        }),
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -172,15 +164,15 @@ describe('App (e2e)', () => {
       assert.ok(response);
       assert.ok(data);
       assert.strictEqual(response.status, 401);
-      assert.strictEqual(data.message, 'Email or/and password are incorrect.')
+      assert.strictEqual(data.message, 'Email or/and password are incorrect.');
     });
   });
 
-  describe('GET /missing-route', ()=>{
-    it('should return 404', async ()=>{
+  describe('GET /missing-route', () => {
+    it('should return 404', async () => {
       const response = await fetch(`${URL}/missing-route`);
       const data = await response.json();
-  
+
       assert.ok(response);
       assert.ok(data);
       assert.strictEqual(response.status, 404);
@@ -188,14 +180,14 @@ describe('App (e2e)', () => {
     });
   });
 
-  describe('GET /user', ()=>{
-    it('should get information from user', async ()=>{
+  describe('GET /user', () => {
+    it('should get information from user', async () => {
       const response = await fetch(`${URL}/user`, {
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      
+
       const data = await response.json();
 
       assert.ok(response);
@@ -203,11 +195,11 @@ describe('App (e2e)', () => {
       assert.strictEqual(response.status, 200);
     });
 
-    it('should return 401 if token is invalid', async ()=>{
+    it('should return 401 if token is invalid', async () => {
       const response = await fetch(`${URL}/user`, {
         headers: {
-          Authorization: 'Bearer invalidtoken'
-        }
+          Authorization: 'Bearer invalidtoken',
+        },
       });
 
       const data = await response.json();
@@ -218,7 +210,7 @@ describe('App (e2e)', () => {
       assert.strictEqual(data.message, 'Unauthorizated.');
     });
 
-    it('should return 401 if token dont exist', async ()=>{
+    it('should return 401 if token dont exist', async () => {
       const response = await fetch(`${URL}/user`);
       const data = await response.json();
 
@@ -229,4 +221,3 @@ describe('App (e2e)', () => {
     });
   });
 });
-

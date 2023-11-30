@@ -13,7 +13,8 @@
     "style:check": "prettier --check src/**/*.js src/modules/** test/**/*.js",
     "style:fix": "prettier --write src/**/*.js src/modules/** test/**/*.js",
     "build": "npm run lint:fix && npm run style:fix && babel src -d dist",
-    "start": "npm run build && node dist/index.js"
+    "start": "npm run build && node dist/index.js",
+    "build:gulp": "npx gulp"
   },
   "keywords": [],
   "author": "",
