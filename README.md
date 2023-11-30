@@ -74,10 +74,10 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
  - [x] Testes de Ponta-a-Ponta (E2E).
  - [x] Gerenciamento de Versão com Changeset.
  - [x] CI/CD com Github Actions.
- - [ ] Front-End:
-	 - [ ] Tela de Login.
-	 - [ ] Tela de Cadastro.
-	 - [ ] Tela de Visualização de Perfil.
+ - [x] Front-End:
+	 - [x] Tela de Login.
+	 - [x] Tela de Cadastro.
+	 - [x] Tela de Visualização de Perfil.
 
 ### Modelagem
 
