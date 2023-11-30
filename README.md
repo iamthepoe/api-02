@@ -9,7 +9,7 @@
 	- [Instalando](#instalando)
 - [Visão Geral](#visão-geral)
 	- [Requisitos](#requisitos)
-	- [Requisitos Desejáveis](#requisitos-desejaveis)
+	- [Requisitos Desejáveis](#requisitos-desejáveis)
 	- [Requisitos Extras](#requisitos-extras)
 	- [Modelagem](#modelagem)
 		- [Arquitetura](#arquitetura)
