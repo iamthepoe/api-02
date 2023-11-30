@@ -4,7 +4,7 @@ import process from 'process';
 import mongoose from 'mongoose';
 import { CreateUserController } from '../factories/user.factory.js';
 import { CreateAuthController } from '../factories/auth.factory.js';
-
+import cors from 'cors';
 configDotenv();
 
 export default class SetupServer {
@@ -62,6 +62,7 @@ export default class SetupServer {
    */
   setupExpress() {
     this.app.use(express.json());
+    this.app.use(cors());
   }
 
   /**
