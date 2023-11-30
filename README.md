@@ -217,4 +217,6 @@ As principais tecnologias utilizadas foram:
 - [JWT](https://jwt.io/)
 
 <hr>
-<div align=center>Feito por Luca Poe.</div>
+<div align=center>
+  Feito com ❤️ e ☕ por [Luca Poe](https://github.com/iamthepoe)
+</div>
