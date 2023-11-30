@@ -218,5 +218,7 @@ As principais tecnologias utilizadas foram:
 
 <hr>
 <div align=center>
-  Feito com ❤️ e ☕ por [Luca Poe](https://github.com/iamthepoe)
+	
+  Feito com ❤️ e ☕ por [Luca Poe](https://github.com/iamthepoe).
+  
 </div>
