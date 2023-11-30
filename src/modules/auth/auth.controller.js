@@ -15,7 +15,7 @@ export default class AuthController {
   async signIn(req, res) {
     try {
       const { email, password } = req.body;
-      
+
       const response = await this.authService.signIn(email, password);
       return res.status(200).json(response);
     } catch (e) {

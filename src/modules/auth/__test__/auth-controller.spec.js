@@ -31,9 +31,14 @@ describe('AuthController', () => {
       },
     };
 
-    mock.method(controller['authService'], 'signIn', async () => {
-      throw new UnauthorizedException('Email or/and password are incorrect.');
-    }, { times: 1 });
+    mock.method(
+      controller['authService'],
+      'signIn',
+      async () => {
+        throw new UnauthorizedException('Email or/and password are incorrect.');
+      },
+      { times: 1 }
+    );
 
     const response = await controller.signIn(req, res);
 
@@ -54,9 +59,14 @@ describe('AuthController', () => {
 
     const token = 'validToken123';
 
-    mock.method(controller['authService'], 'signIn', async () => {
-      return { token };
-    }, { times: 1 });
+    mock.method(
+      controller['authService'],
+      'signIn',
+      async () => {
+        return { token };
+      },
+      { times: 1 }
+    );
 
     const response = await controller.signIn(req, res);
 
@@ -76,8 +86,15 @@ describe('AuthController', () => {
 
     const payload = { id: 'userId123' };
 
-    mock.method(controller['authService'], 'getTokenFromHeader', () => 'validToken123', { times: 1 });
-    mock.method(controller['authService'], 'decodeToken', async () => payload, { times: 1 });
+    mock.method(
+      controller['authService'],
+      'getTokenFromHeader',
+      () => 'validToken123',
+      { times: 1 }
+    );
+    mock.method(controller['authService'], 'decodeToken', async () => payload, {
+      times: 1,
+    });
 
     const next = () => {};
 
@@ -96,10 +113,20 @@ describe('AuthController', () => {
 
     const error = new UnauthorizedException('Unauthorizated.');
 
-    mock.method(controller['authService'], 'getTokenFromHeader', () => 'InvalidToken', { times: 1 });
-    mock.method(controller['authService'], 'decodeToken', async () => {
-      throw error;
-    }, { times: 1 });
+    mock.method(
+      controller['authService'],
+      'getTokenFromHeader',
+      () => 'InvalidToken',
+      { times: 1 }
+    );
+    mock.method(
+      controller['authService'],
+      'decodeToken',
+      async () => {
+        throw error;
+      },
+      { times: 1 }
+    );
 
     const response = await controller.authorize(req, res, () => {});
 

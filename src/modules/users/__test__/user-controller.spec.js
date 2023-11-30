@@ -40,7 +40,9 @@ describe('UserController', () => {
       phones: [{ ddd: '11', number: '987654321' }],
     };
 
-    mock.method(controller['service'], 'create', async () => createdUser, { times: 1 });
+    mock.method(controller['service'], 'create', async () => createdUser, {
+      times: 1,
+    });
 
     const response = await controller.create(req, res);
 
@@ -62,9 +64,14 @@ describe('UserController', () => {
 
     const internalError = new InternalErrorException('Internal Error');
 
-    mock.method(controller['service'], 'create', async () => {
-      throw internalError;
-    }, { times: 1 });
+    mock.method(
+      controller['service'],
+      'create',
+      async () => {
+        throw internalError;
+      },
+      { times: 1 }
+    );
 
     const response = await controller.create(req, res);
 
@@ -88,7 +95,9 @@ describe('UserController', () => {
       phones: [{ ddd: '11', number: '987654321' }],
     };
 
-    mock.method(controller['service'], 'findById', async () => foundUser, { times: 1 });
+    mock.method(controller['service'], 'findById', async () => foundUser, {
+      times: 1,
+    });
 
     const response = await controller.findByToken(req, res);
 
@@ -113,9 +122,14 @@ describe('UserController', () => {
     const error = new Error('User retrieval failed');
     error.code = 500;
 
-    mock.method(controller['service'], 'findById', async () => {
-      throw error;
-    }, { times: 1 });
+    mock.method(
+      controller['service'],
+      'findById',
+      async () => {
+        throw error;
+      },
+      { times: 1 }
+    );
 
     const response = await controller.findByToken(req, res);
 
@@ -132,9 +146,14 @@ describe('UserController', () => {
       },
     };
 
-    mock.method(controller['service'], 'findById', async () => {
-      throw new NotFoundException('User not found.');
-    }, { times: 1 });
+    mock.method(
+      controller['service'],
+      'findById',
+      async () => {
+        throw new NotFoundException('User not found.');
+      },
+      { times: 1 }
+    );
 
     const response = await controller.findByToken(req, res);
 

@@ -45,9 +45,9 @@ export default class AuthService {
   async signIn(email, password) {
     let user;
 
-    try{
+    try {
       user = await this.userService.findByEmail(email);
-    }catch{
+    } catch {
       throw new UnauthorizedException('Email or/and password are incorrect.');
     }
 
