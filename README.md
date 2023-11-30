@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> aa0b8ff (feat: add cors to dependencies)
 # API - Autenticação de Usuários
   
 </p>
@@ -78,6 +84,7 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 	 - [ ] Tela de Login.
 	 - [ ] Tela de Cadastro.
 	 - [ ] Tela de Visualização de Perfil.
+
 ### Modelagem
 
 #### Arquitetura
@@ -217,8 +224,13 @@ As principais tecnologias utilizadas foram:
 - [JWT](https://jwt.io/)
 
 <hr>
+<<<<<<< HEAD
 <div align=center>
 	
   Feito com ❤️ e ☕ por [Luca Poe](https://github.com/iamthepoe).
   
 </div>
+=======
+<div align=center>Feito com ❤️ e ☕ por [Luca Poe](https://github.com/iamthepoe)
+</div>
+>>>>>>> aa0b8ff (feat: add cors to dependencies)
