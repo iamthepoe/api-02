@@ -1,6 +1,6 @@
 {
   "name": "auth-api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Desafio Técnico: API de Autenticação",
   "main": "dist/src/index.js",
   "type": "module",
@@ -17,7 +17,11 @@
     "build:gulp": "npx gulp",
     "release": "npm run build && npx changeset tag"
   },
-  "keywords": ["node", "express", "api"],
+  "keywords": [
+    "node",
+    "express",
+    "api"
+  ],
   "author": "Luca Poe",
   "license": "ISC",
   "dependencies": {
