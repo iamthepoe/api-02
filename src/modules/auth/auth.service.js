@@ -43,10 +43,13 @@ export default class AuthService {
    * @param {string} password
    */
   async signIn(email, password) {
-    const user = await this.userService.findByEmail(email);
+    let user;
 
-    if (!user)
+    try{
+      user = await this.userService.findByEmail(email);
+    }catch{
       throw new UnauthorizedException('Email or/and password are incorrect.');
+    }
 
     const passwordIsCorrect = await this.hashService.compare(
       password,

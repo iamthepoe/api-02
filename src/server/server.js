@@ -36,16 +36,20 @@ export default class SetupServer {
   }
 
   init() {
-    try {
-      this.setupDatabase();
-      this.setupExpress();
-      this.setupMiddlewares();
-      this.setupRoutes();
-      this.server = this.app.listen(this.port);
-      return true;
-    } catch (e) {
-      return { message: 'Error at initialize', exception: e };
-    }
+    return new Promise((resolve, reject) => {
+      try {
+        this.setupDatabase();
+        this.setupExpress();
+        this.setupMiddlewares();
+        this.setupRoutes();
+        this.server = this.app.listen(this.port, () => {
+          console.log('Server is running.');
+          resolve();
+        });
+      } catch (e) {
+        reject({ message: 'Error at initialize', exception: e });
+      }
+    });
   }
 
   async close() {
@@ -73,10 +77,6 @@ export default class SetupServer {
    * @private
    */
   setupRoutes() {
-    this.app.get('*', (req, res) => {
-      return res.status(404).json({ message: 'Not Found' });
-    });
-
     this.app.get('/user', (req, res) => {
       return this.userController.findByToken(req, res);
     });
@@ -87,6 +87,11 @@ export default class SetupServer {
 
     this.app.post('/sign-in', (req, res) => {
       return this.authController.signIn(req, res);
+    });
+
+    // 404 Route
+    this.app.use((req, res) => {
+      res.status(404).json({ message: 'Not Found' });
     });
   }
 

@@ -78,7 +78,7 @@ describe('AuthService', () => {
   });
 
   it('should throw UnauthorizedException if email is incorrect', async () => {
-    mock.method(service.userService, 'findByEmail', async () => null);
+    mock.method(service.userService, 'findByEmail', async () => {throw new Error});
 
     const email = 'nonexistent@example.com';
     const password = 'password123';
