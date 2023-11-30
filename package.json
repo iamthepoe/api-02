@@ -1,7 +1,7 @@
 {
-  "name": "escribo-02",
+  "name": "auth-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Desafio Técnico: API de Autenticação",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -17,8 +17,8 @@
     "build:gulp": "npx gulp",
     "release": "npm run build && npx changeset tag"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["node", "express", "api"],
+  "author": "Luca Poe",
   "license": "ISC",
   "dependencies": {
     "@changesets/cli": "^2.27.1",
