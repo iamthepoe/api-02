@@ -82,7 +82,11 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 ### Modelagem
 
 #### Arquitetura
+<div align=center>
+
 ![desenho da arquitetura](https://raw.githubusercontent.com/iamthepoe/api-02/main/assets/arch.jpg)
+</div>
+
 1.  **Repository:**
     
     -   **Propósito:** A camada Repository (Repositório) é responsável por lidar diretamente com a persistência de dados. Sua função principal é abstrair e encapsular as operações relacionadas ao banco de dados ou a qualquer mecanismo de armazenamento. Ele fornece métodos para criar, ler, atualizar e excluir (CRUD) dados.
@@ -96,7 +100,10 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
     -   **Propósito:** A camada Controller (Controlador) é responsável por receber as requisições do cliente, chamar os métodos apropriados na camada de Service e retornar as respostas adequadas ao cliente. Ele lida com a comunicação entre a aplicação e o mundo exterior, frequentemente processando entradas do usuário, chamando os serviços necessários e formatando as respostas.
     -   **Exemplo:** Em um controller de autenticação, a camada Controller receberia uma solicitação de login, chamaria o serviço de autenticação para validar as credenciais e retornaria uma resposta adequada ao cliente.
 #### Deploy 
+<div align=center>
+
 ![deploy](https://raw.githubusercontent.com/iamthepoe/api-02/main/assets/deploy.png)
+</div>
 
 ## Documentação
 
@@ -117,7 +124,7 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 ```
 #### Output (sucesso):
 
-**Status**: 201 (Created).
+**Status**: 201 (Created).<br>
 **Body**:
 ```json
   "id": "UUID",
@@ -128,7 +135,7 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 ```
 
 #### Output (email já cadastrado):
-**Status**: 400 (Bad Request).
+**Status**: 400 (Bad Request).<br>
 **Body**:
 ```json
 {
@@ -148,7 +155,7 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 
 #### Output (sucesso):
 
-**Status**: 200 (OK).
+**Status**: 200 (OK).<br>
 **Body**:
 ```json
   "id": "UUID",
@@ -160,7 +167,7 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 
 #### Output (senha e/ou email incorretos):
 
-**Status**: 401 (Unauthorized).
+**Status**: 401 (Unauthorized).<br>
 **Body**:
 ```json
 {
@@ -174,7 +181,7 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 ```
 #### Output (sucesso):
 
-**Status**: 200 (OK).
+**Status**: 200 (OK).<br>
 **Body**:
 ```json
 {
@@ -193,7 +200,7 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 
 #### Output (token inválido ou expirado):
 
-**Status**: 401 (Unauthorized).
+**Status**: 401 (Unauthorized).<br>
 **Body**: 
 ```json
 {
