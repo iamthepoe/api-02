@@ -1,15 +1,13 @@
-
-
 # API - Autenticação de Usuários
   
 </p>
 
 ## 📋 Sumário
 
-- [Instalação](#-instalação)
+- [Instalação](#instalação)
 	- [Requisitos](#requisitos)
 	- [Instalando](#instalando)
-- [Visão Geral](#-visão-geral)
+- [Visão Geral](#visão-geral)
 	- [Requisitos](#requisitos)
 	- [Requisitos Desejáveis](#requisitos-desejaveis)
 	- [Requisitos Extras](#requisitos-extras)
@@ -17,9 +15,9 @@
 		- [Arquitetura](#arquitetura)
 		- [Deploy](#deploy)
 - [Documentação](#documentação)
-- [Tecnologias](#-tecnologias)
+- [Tecnologias](#tecnologias)
 
-## 💻 Instalação
+## Instalação
 
 ### Requisitos
 
@@ -55,7 +53,7 @@ pnpm install
 # Inicie o projeto em modo de desenvolvimento
 pnpm run dev
 ```
-## 👀 Visão Geral
+## Visão Geral
 
 O presente repositório se trata de um **desafio técnico**, cujo a proposta é desenvolver uma **API RESTful** para autenticação de usuários, que permita operações de cadastro (sign up), autenticação (sign in) e recuperação de informações do usuário.
 
@@ -64,7 +62,7 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
  - [x] Persistência de dados: **MongoDB**.
  - [x] Sistema de build com gerenciamento de dependências: **Babel** + **PNPM**.
  - [x] Task runner para build: **Gulpjs**.
- - [x] Padronização de estilo: **ESLint** + **Prettier.**
+ - [x] Padronização de estilo: **ESLint** + **Prettier**.
  - [x] Framework: **Express**.
 
 ### Requisitos Desejáveis:
@@ -74,7 +72,8 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
  
 ### Requisitos Extras:
  - [x] Testes de Ponta-a-Ponta (E2E).
- - [x] CI (Continuous Integration) com Github Actions.
+ - [x] Gerenciamento de Versão com Changeset.
+ - [x] CI/CD com Github Actions.
  - [ ] Front-End:
 	 - [ ] Tela de Login.
 	 - [ ] Tela de Cadastro.
@@ -124,19 +123,19 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 ```
 #### Output (sucesso):
 
-**Status**: 201 (Created).<br>
-**Body**:
+`Status`: 201 (Created).<br>
+`Body`:
 ```json
   "id": "UUID",
   "createdAt": "Date",
   "updatedAt": "Date",
   "lastLogin": "Date",
-  "token": 	"JWT-TOKEN"
+  "token": "JWT-TOKEN"
 ```
 
 #### Output (email já cadastrado):
-**Status**: 400 (Bad Request).<br>
-**Body**:
+`Status`: 400 (Bad Request).<br>
+`Body`:
 ```json
 {
   "message": "Email is already in use"
@@ -155,8 +154,8 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 
 #### Output (sucesso):
 
-**Status**: 200 (OK).<br>
-**Body**:
+`Status`: 200 (OK).<br>
+`Body`:
 ```json
   "id": "UUID",
   "createdAt": "Date",
@@ -167,8 +166,8 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 
 #### Output (senha e/ou email incorretos):
 
-**Status**: 401 (Unauthorized).<br>
-**Body**:
+`Status`: 401 (Unauthorized).<br>
+`Body`:
 ```json
 {
   "message": "Email or/and password are incorrect."
@@ -181,8 +180,8 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 ```
 #### Output (sucesso):
 
-**Status**: 200 (OK).<br>
-**Body**:
+`Status`: 200 (OK).<br>
+`Body`:
 ```json
 {
   "id": "UUID",
@@ -200,14 +199,14 @@ O presente repositório se trata de um **desafio técnico**, cujo a proposta é 
 
 #### Output (token inválido ou expirado):
 
-**Status**: 401 (Unauthorized).<br>
-**Body**: 
+`Status`: 401 (Unauthorized).<br>
+`Body`: 
 ```json
 {
   "message": "Unauthorizated."
 }
 ```
-## 🚀 Tecnologias
+## Tecnologias
 
 As principais tecnologias utilizadas foram:
 
