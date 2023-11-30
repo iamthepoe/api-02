@@ -8,9 +8,9 @@ let testPassed = false;
 
 async function test() {
   return new Promise((resolve, reject) => {
-    exec('npm run test:unit', (error, stdout, stderr) => {
-      console.error('FAILED TESTS:', stderr);
+    exec('npm run test:unit && npm run test:e2e', (error, stdout, stderr) => {
       if (error) {
+        console.error('FAILED TESTS:', stderr);
         reject(error);
       } else {
         testPassed = true;
