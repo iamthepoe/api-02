@@ -15,7 +15,7 @@
     "build": "npm run lint:fix && npm run style:fix && babel src -d dist",
     "start": "npm run build && node dist/index.js",
     "build:gulp": "npx gulp",
-    "release": "npm run build && npx changeset publish"
+    "release": "npm run build && npx changeset tag"
   },
   "keywords": [],
   "author": "",
