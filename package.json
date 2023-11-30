@@ -14,12 +14,14 @@
     "style:fix": "prettier --write src/**/*.js src/modules/** test/**/*.js",
     "build": "npm run lint:fix && npm run style:fix && babel src -d dist",
     "start": "npm run build && node dist/index.js",
-    "build:gulp": "npx gulp"
+    "build:gulp": "npx gulp",
+    "release": "npm run build && npx changeset publish"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@changesets/cli": "^2.27.1",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
