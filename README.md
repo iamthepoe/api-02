@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> aa0b8ff (feat: add cors to dependencies)
 # API - Autenticação de Usuários
   
 </p>
@@ -224,13 +218,12 @@ As principais tecnologias utilizadas foram:
 - [JWT](https://jwt.io/)
 
 <hr>
-<<<<<<< HEAD
 <div align=center>
 	
   Feito com ❤️ e ☕ por [Luca Poe](https://github.com/iamthepoe).
   
 </div>
 =======
-<div align=center>Feito com ❤️ e ☕ por [Luca Poe](https://github.com/iamthepoe)
+<div align=center>
+Feito com ❤️ e ☕ por [Luca Poe](https://github.com/iamthepoe)
 </div>
->>>>>>> aa0b8ff (feat: add cors to dependencies)
